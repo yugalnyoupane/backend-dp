@@ -3,6 +3,7 @@ const { books } = require("./database/connection")
 let app = express()
 
 require("./database/connection")
+app.use(express.json())
 
 //book project
 //READ
@@ -18,8 +19,17 @@ app.get("/books",async (req,res)=>{
 })
 
 //Create
-app.post("/books",(req,res)=>{
+app.post("/books",async (req,res)=>{
     //logic to add book to databse goes here
+    console.log(req.body)
+    const {bookName,bookPrice,bookAuthor,bookGenre}=req.body
+    await books.create({
+        //columnName : value sent from Postman or Frontend
+        bookName: bookName,
+        bookPrice: bookPrice,
+        bookAuthor: bookAuthor,
+        bookGenre: bookGenre
+    })
     res.json({
         message:"Book Added Succesfully"
     })
