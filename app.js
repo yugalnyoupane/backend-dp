@@ -1,15 +1,18 @@
 let express = require("express")
+const { books } = require("./database/connection")
 let app = express()
 
 require("./database/connection")
 
 //book project
 //READ
-app.get("/books",(req,res)=>{
+app.get("/books",async (req,res)=>{
     // logic to fetch books from database
+    const datas = await books.findAll() //database query so use await()
     res.json(
         {
-            message:"books fetch succesfully"
+            message:"books fetch succesfully",
+            datas: datas //or you can simply write datas only since key and value are same
         }
     )
 })
