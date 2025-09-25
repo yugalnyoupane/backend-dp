@@ -1,55 +1,27 @@
 let express = require("express")
-const { books } = require("./database/connection")
 let app = express()
+
+const { books } = require("./database/connection")
+const { fetchBook, addBook, deleteBook, editBook } = require("./controllers/book.controller")
+const bookRoute = require("./routers/book.route")
 
 require("./database/connection")
 app.use(express.json())
 
-//book project
-//READ
-app.get("/books",async (req,res)=>{
-    // logic to fetch books from database
-    const datas = await books.findAll() //database query so use await()
-    res.json(
-        {
-            message:"books fetch succesfully",
-            datas: datas //or you can simply write datas only since key and value are same
-        }
-    )
-})
+// //book project
+// //READ
+// app.get("/books",fetchBook)
 
-//Create
-app.post("/books",async (req,res)=>{
-    //logic to add book to databse goes here
-    console.log(req.body)
-    const {bookName,bookPrice,bookAuthor,bookGenre}=req.body
-    await books.create({
-        //columnName : value sent from Postman or Frontend
-        bookName: bookName,
-        bookPrice: bookPrice,
-        bookAuthor: bookAuthor,
-        bookGenre: bookGenre
-    })
-    res.json({
-        message:"Book Added Succesfully"
-    })
-})
+// //Create
+// app.post("/books",addBook)
 
-//Delete
-app.delete("/books/:id",(req,res)=>{
-    //logic to dalete book
-    res.json({
-        message:"Book Delelted Succesfully"
-    })
-})
+// //Delete
+// app.delete("/books/:id",deleteBook)
 
-//Update
-app.patch("/books/:id",(req,res)=>{
-    //logic to update book
-    res.json({
-        message:"Book updated Succesfully"
-    })
-})
+// //Update
+// app.patch("/books/:id",editBook)
+
+app.use("",bookRoute)
 
 
 app.listen(3000,()=>{
