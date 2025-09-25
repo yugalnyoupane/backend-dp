@@ -28,16 +28,41 @@ const addBook = async (req,res)=>{
     })
 }
 
-const deleteBook = (req,res)=>{
-    //logic to dalete book
+const deleteBook = async (req,res)=>{
+    //selecting id of the book that we want to delete
+    const id = req.params.id //id, because :id is sent, choose name according to it 
+
+    //delete logic
+    await books.destroy({
+        where:{
+            id:id
+        }
+    })
     res.json({
         message:"Book Delelted Succesfully"
     })
 }
 
 
-const editBook = (req,res)=>{
+const editBook = async (req,res)=>{
     //logic to update book
+    // which id is needed to be edited 
+    const id = req.params.id
+
+    //what what to update
+    const {bookName, bookPrice, bookAuthor,bookGenre} = req.body
+
+    await books.update({
+        bookName : bookName,
+        bookPrice : bookPrice,
+        bookAuthor : bookAuthor,
+        bookGenre : bookGenre
+    },{
+        where : {
+            id : id
+        }
+    })
+
     res.json({
         message:"Book updated Succesfully"
     })
