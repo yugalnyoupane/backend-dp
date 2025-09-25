@@ -4,9 +4,7 @@ let app = express()
 const { books } = require("./database/connection")
 const { fetchBook, addBook, deleteBook, editBook } = require("./controllers/book.controller")
 const bookRoute = require("./routers/book.route")
-
 require("./database/connection")
-app.use(express.json())
 
 // //book project
 // //READ
@@ -21,6 +19,7 @@ app.use(express.json())
 // //Update
 // app.patch("/books/:id",editBook)
 
+app.use(express.json())
 app.use("",bookRoute)
 
 

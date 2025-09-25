@@ -1,5 +1,3 @@
-
-
 //database connection logic
 const {Sequelize,DataTypes} = require("sequelize")
 
